@@ -1,0 +1,28 @@
+{
+  "name": "Proyecto-Final-Web",
+  "version": "1.0.0",
+  "description": "Proyecto final de la materia de programación web acerca de un sistema de tickets hecho en Vue.js y utilizando MySQL como base de datos",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OsielSA/Proyecto-Final-Web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OsielSA/Proyecto-Final-Web/issues"
+  },
+  "homepage": "https://github.com/OsielSA/Proyecto-Final-Web#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+  
+}
