@@ -2,16 +2,16 @@ const express = require('express');
 
 const routes = express.Router();
 
-const personasController = require('../controllers/personasController');
+const ticketsController = require('../controllers/ticketsController');
 
-/*routes.get('/', personasController.listar)
+routes.get('/Tickets/', ticketsController.listar)
 
-routes.get('/:id', personasController.obtenerPersona)
+routes.get('/Tickets/:id', ticketsController.obtenerTicket)
 
-routes.post('/', personasController.crear)
+routes.post('/Tickets/', ticketsController.crear)
 
-routes.put('/:id', personasController.editar);
+routes.put('/Tickets/:id', ticketsController.editar);
 
-routes.delete('/:id', personasController.eliminar);
+routes.delete('/Tickets/:id', ticketsController.eliminar);
 
-module.exports = routes;*/
+module.exports = routes;

@@ -18,15 +18,15 @@ function obtenerTicket(req, res) {
     if(connection) {
         const { id } = req.params;
         let sql = `SELECT * FROM Tickets WHERE id = ${connection.escape(id)}`;
-        connection.query(sql, (err, tickets) => {
+        connection.query(sql, (err, ticket) => {
             if(err) {
                 console.log(err);
             } else {
                 var mensaje1 = "";
-                if(tickets == undefined || tickets.length == 0)
-                mensaje1 = "Tickets no encontrada";
+                if(ticket == undefined || ticket.length == 0)
+                mensaje1 = "Ticket no encontrado";
 
-                res.json({data: tickets, mensaje: mensaje1})
+                res.json({data: ticket, mensaje: mensaje1})
             }
         })
     }
@@ -41,21 +41,26 @@ function crear(req, res) {
             return res.status(400).send({ error: true, mensaje: "El nombre es obligatorio"});
         }
         if(!ticket.prioridad) {
-            return res.status(400).send({ error: true, mensaje: "El nombre es obligatorio"});
+            return res.status(400).send({ error: true, mensaje: "La prioridad es obligatoria"});
+        }
+        if(!ticket.estatus) {
+            return res.status(400).send({ error: true, mensaje: "El estatus es obligatorio"});
+        }
+        if(!ticket.personalID) {
+            return res.status(400).send({ error: true, mensaje: "Debe seleccionar una Persona"});
+        }
+        if(!ticket.categoriaID) {
+            return res.status(400).send({ error: true, mensaje: "Debe seleccionar una Categoria"});
         }
 
-        /*if(ticket.descripcion && persona.descripcion.length !== 10 ) {
-            return res.status(400).send({ error: true, mensaje: "La longitud debe ser de 10 caracteres"});
-        }*/
+        let sql = "INSERT INTO Tickets set ?";
 
-        let sql = "INSERT INTO persona set ?";
-
-        connection.query(sql, [persona], (err, data) => {
+        connection.query(sql, [ticket], (err, data) => {
             if(err) {
                 console.log(err);
             } else {
                 
-                res.json({error: false, data, mensaje: "Persona creada con exito."});
+                res.json({error: false, data, mensaje: "Ticket creado con exito."});
             }
         })
     }
@@ -64,10 +69,10 @@ function crear(req, res) {
 function editar(req, res) {
     if(connection){
         const { id } = req.params;
-        const persona = req.body;
+        const ticket = req.body;
 
-        let sql = "UPDATE persona set ? WHERE id = ?";
-        connection.query(sql, [persona, id], (err, data) => {
+        let sql = "UPDATE Tickets set ? WHERE id = ?";
+        connection.query(sql, [ticket, id], (err, data) => {
             if(err) {
                 res.json(err);
             } else {
@@ -85,7 +90,7 @@ function editar(req, res) {
 function eliminar(req, res) {
     if(connection) {
         const { id } = req.params;
-        let sql = "DELETE from persona WHERE id = ?";
+        let sql = "DELETE from Tickets WHERE id = ?";
 
         connection.query(sql, [id], (err, data) => {
             if(err) {
@@ -93,9 +98,9 @@ function eliminar(req, res) {
             } else {
                 let mensaje = "";
                 if(data.affectedRows === 0){
-                    mensaje = "Persona no encontrada";
+                    mensaje = "Ticket no encontrado";
                 } else {
-                    mensaje = "Persona eliminada con exito";
+                    mensaje = "Ticket eliminado con exito";
                 }
 
                 res.json({error: false, data, mensaje: mensaje});
@@ -106,7 +111,7 @@ function eliminar(req, res) {
 
 module.exports = {
     listar,
-    obtenerPersona,
+    obtenerTicket,
     crear,
     editar,
     eliminar
